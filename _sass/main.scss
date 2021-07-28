@@ -1,0 +1,43 @@
+body {
+    background-color: lighten(yellow, 40%);
+
+    .outer_screen {
+	background-color: #111;
+	border-radius: 20px;
+	.screen {
+	    background-color: #333;
+	    color: #DDD;
+	}
+    }
+
+    .controls {
+	border: solid 1px #333;
+	border-radius: 10px;
+	background-color: #ff8;
+	padding: 2em;
+    }
+    .choices {
+	.choice:hover {
+	    background-color: #ee9;
+	}
+	.choice.active label {
+	    background-color: darken(#ffc107, 7%);
+	}
+    }
+}
+
+#page_text {
+    font-family: TimesNewRoman;
+    font-size: 150%;
+}
+
+.progress {
+    height: 3px;
+    .progress-bar {
+	background-color: #996;
+    }
+}
+
+img.crank {
+    width: 2em;
+}
