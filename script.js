@@ -31,7 +31,7 @@ function update_crank(percent){
 function update_page(){
   $.getJSON(`${api_url}/api/${user}/current`).then(
     (data)=> {
-      $('#page_text').html(marked(data.page_text));
+      $('.page_text').html(marked(data.page_text));
       render_score(data);
       render_pagebar(data);
       render_choices(data.choices);
@@ -56,6 +56,7 @@ function render_pagebar(data){
 
 function render_choices(data){
   if ($.isEmptyObject(data)){
+    $('.choices').addClass('d-none');
     return;
   }
   let btnA = $('<input/>').attr({type:'radio', class:"btn-check",

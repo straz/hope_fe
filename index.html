@@ -7,23 +7,20 @@
   <div class="container">
   <div class="row">
     <div class="col-10 outer_screen mt-3 p-4">
-      <div class="screen overflow-auto p-2">
-      <h2 class="mt-4">In A New York Minute</h2>
+      <div class="screen p-2">
+	<div class="page_text overflow-auto" class="my-4 pt-2 pb-5 px-1">
+	  {{ page_text }}
+	</div>
 
-      <div>score: <span id="score"></span> /
-	<span id="out_of"></span></div>
-    
-      <div id="page_text" class="my-4 pt-2 pb-5 px-1">{{ page_text }}</div>
-
-      <p class="mt-5">
-	<div>page:
-	  <span id="page_index"></span>
-	  <div class="progress w-25">
-	    <div class="progress-bar" role="progressbar">
+	<div class="statusbar">
+	  <div class="pbar">page:
+	    <span id="page_index"></span>
+	    <div class="progress">
+	      <div class="progress-bar" role="progressbar"></div>
 	    </div>
 	  </div>
+	  <div class="score">score: <span id="score"></span> / <span id="out_of"></span></div>
 	</div>
-      </p>
       </div>
     </div>
     
