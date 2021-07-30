@@ -11,6 +11,23 @@ body {
 	width: 650px;
 	height: 450px;
 	.screen {
+	    position: relative;
+	    .bumper { background-color: #8886;
+		      z-index: 10;
+		      position: absolute;
+		      display: none;
+		      left: 0px;
+		      width: 600px;
+		      height: 20px;
+		      &.top {
+			  top: 0px;
+			  background-color: #8883;
+		      }
+		      &.bottom {
+			  bottom: 42px;
+			  background-color: #8883;
+		      }
+		    }
 	    background-color: #333;
 	    color: #DDD;
 	    width: 600px;

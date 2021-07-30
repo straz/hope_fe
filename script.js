@@ -7,10 +7,14 @@ const user = 'steve';
 
 const api_url = "{{ site.api_url }}";
 
+var scroll_lock = false;
+var scroll_wait = 1000;
+
 function initialize(){
   marked.setOptions({'smartypants':true});
   $('#prev').click(go_prev);
   $('#next').click(go_next);
+  $('.page_text').scroll(on_text_scroll);
   update_page();
 }
 
@@ -31,12 +35,33 @@ function update_crank(percent){
 function update_page(){
   $.getJSON(`${api_url}/api/${user}/current`).then(
     (data)=> {
-      $('.page_text').html(marked(data.page_text));
+      $('.page_text').scrollTop(0).html(marked(data.page_text));
       render_score(data);
       render_pagebar(data);
       render_choices(data.choices);
     }
   );
+}
+
+
+function on_text_scroll(evt){
+  let div = evt.target;
+  let pos = $(div).scrollTop();
+  if ( pos == 0){
+    console.log('top!');
+    if (!scroll_lock){
+      lock_scroll('top');
+      //go_prev();
+    }
+  }
+  if ( pos == $(div)[0].scrollHeight - $(div).height()) {
+    console.log('bottom!');
+    if (!scroll_lock){
+      lock_scroll('bottom');
+      //$(div).scrollTop(0);
+      //go_next();
+    }
+  }
 }
 
 function render_score(data){
@@ -81,4 +106,18 @@ function onClickChoice(evt){
   console.log(evt.currentTarget);
   $('.choice.active').removeClass('active');
   $(evt.currentTarget).addClass('active');
+}
+
+function unlock_scroll(){
+  scroll_lock = false;
+  console.log('unlocked');
+}
+
+function lock_scroll(pos){
+  if (scroll_lock){
+    return;
+  }
+  $( ".bumper."+pos ).css( "display", "block" ).fadeOut("slow", unlock_scroll);
+  scroll_lock = true;
+  console.log('locked');
 }
