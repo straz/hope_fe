@@ -19,11 +19,11 @@ function initialize(){
 }
 
 function go_next(evt){
-  $.get(`${api_url}/api/${user}/next`).then(update_page);
+  $.get(`${api_url}/api/next/${user}`).then(update_page);
 }
 
 function go_prev(evt){
-  $.get(`${api_url}/api/${user}/prev`).then(update_page);
+  $.get(`${api_url}/api/prev/${user}`).then(update_page);
 }
 
 function update_crank(percent){
@@ -33,7 +33,7 @@ function update_crank(percent){
 
 
 function update_page(){
-  $.getJSON(`${api_url}/api/${user}/current`).then(
+  $.getJSON(`${api_url}/api/current/${user}`).then(
     (data)=> {
       $('.page_text').scrollTop(0).html(marked(data.page_text));
       render_score(data);
@@ -48,18 +48,17 @@ function on_text_scroll(evt){
   let div = evt.target;
   let pos = $(div).scrollTop();
   if ( pos == 0){
-    console.log('top!');
+    // console.log('top!');
     if (!scroll_lock){
       lock_scroll('top');
-      //go_prev();
+      // go_prev();
     }
   }
   if ( pos == $(div)[0].scrollHeight - $(div).height()) {
-    console.log('bottom!');
+    // console.log('bottom!');
     if (!scroll_lock){
       lock_scroll('bottom');
-      //$(div).scrollTop(0);
-      //go_next();
+      // go_next();
     }
   }
 }
@@ -108,16 +107,15 @@ function onClickChoice(evt){
   $(evt.currentTarget).addClass('active');
 }
 
-function unlock_scroll(){
-  scroll_lock = false;
-  console.log('unlocked');
-}
-
+// pos is 'top' or 'bottom'
 function lock_scroll(pos){
-  if (scroll_lock){
-    return;
-  }
+  if (scroll_lock){ return; }
   $( ".bumper."+pos ).css( "display", "block" ).fadeOut("slow", unlock_scroll);
   scroll_lock = true;
   console.log('locked');
+}
+
+function unlock_scroll(){
+  scroll_lock = false;
+  console.log('unlocked');
 }
