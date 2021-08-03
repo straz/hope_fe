@@ -190,28 +190,41 @@ img[alt=watch] {
 }
 
 .crank {
+    top: 12em;
+    left: 1em;
     position: relative;
-    top: 6em;
-    padding-top: 2em;
-    padding-left: 3px;
-    padding-right: 3px;
-    background-color: $dpad-color;
-    span {
-	color: darken($dpad-color, 15%);
+    .washer {
+	margin-top: 8em;
+	width: 5px;
+	height: 45px;
     }
-    .tab {
-	position: relative;
-	width: 50px;
-	height: 70px;
-	font-size: 4em;
-	border-radius: 3px;
-	margin-bottom: 5px;
-	i {
-	    position: absolute;
-	    top: 20px;
-	    left: 8px;
-	    font-size: 50%;
-	    color: #FFF9;
+    .handle {
+	width: 45px;
+	height: 200px;
+	border-radius: 0px 0px $dpad-r $dpad-r;
+    }
+    .tabs {
+	margin-top: -63px;
+	.tab {
+	    background-color: $dpad-color;
+	    position: relative;
+	    width: 50px;
+	    height: 70px;
+	    font-size: 4em;
+	    border-radius: 3px;
+	    border: 4px solid darken($dpad-color, 4%);
+	    border-style: none solid solid none;
+
+	    &:hover {
+		border: solid 3px gray;
+	    }
+	    i {
+		position: absolute;
+		top: 20px;
+		left: 8px;
+		font-size: 50%;
+		color: #FFF9;
+	    }
 	}
     }
 }
@@ -236,8 +249,4 @@ img[alt=watch] {
 				      hsl(0,0%,90%) 47%, 
 				      hsl(0,0%,78%) 53%,
 				      hsl(0,0%,70%)100%);
-    border: solid 3px transparent;
-    &:hover {
-	border: solid 3px gray;
-    }
 }
