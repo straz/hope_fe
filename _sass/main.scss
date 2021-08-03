@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap:200');
 @import url('https://fonts.googleapis.com/css?family=Spectral:200,200i,300,300i,400,400i,500,500i,600,700&display=swap');
 
+$dpad-w: 70px;
+$dpad-h: 62px;
+$dpad-color: #ffd008;
+$dpad-r: $dpad-w / 2;
+$putty: #ffc107;
 
 body {
     background-color: lighten(yellow, 40%);
@@ -66,11 +71,8 @@ body {
     }
 
     .controls {
-	width: 600px;
-	border: solid 1px #333;
-	border-radius: 10px;
-	background-color: #ff8;
-	padding: 2em;
+	margin-top: 50px;
+	margin-left: 50px;
     }
     .choices {
 	.choice:hover {
@@ -89,4 +91,91 @@ img.crank {
 
 img[alt=watch] {
     width: 400px
+}
+
+.dpad {
+    position: relative;
+    .leg {
+	position: absolute;
+	background-color: $dpad-color;
+	border: 4px solid darken($dpad-color, 4%);
+
+	&:hover {
+	    background-color: darken($dpad-color, 4%);
+	}
+	&.north {
+	    top: 0px; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-w;
+	    border-radius: $dpad-r $dpad-r 0 0;
+	    border-style: none solid none none;
+	}
+	&.east {
+	    top: $dpad-w; left: $dpad-w + $dpad-h;
+	    width: $dpad-w; height: $dpad-h;
+	    border-radius: 0px $dpad-r $dpad-r 0px;
+	    border-style: none solid solid none;
+	}
+	&.west {
+	    top: $dpad-w; left: 0px;
+	    width: $dpad-w; height: $dpad-h;
+	    border-radius: $dpad-r 0px 0px $dpad-r;
+	    border-style: none none solid none;
+	}
+	&.south {
+	    top: $dpad-w + $dpad-h; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-w;
+	    border-radius: 0px 0px $dpad-r $dpad-r;
+	    border-style: none solid solid none;
+	}
+	&.center {
+	    top: $dpad-w; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-h;
+	    border-style: none;
+	    &:hover {
+		background-color: $dpad-color;
+	    }
+	}
+    }
+}
+
+.abgroup {
+    position: relative;
+    left: 340px;
+    top: 30px;
+    .ab {
+	position: absolute;
+	height: $dpad-w * 1.2;
+	width: $dpad-w * 1.2;
+	border-radius: ($dpad-w * 1.2) / 2;
+	background-color: $dpad-color;
+	top: 0px;
+	padding: 10px 0px 0px 20px;
+	border: 4px solid darken($dpad-color, 4%);
+	border-style: none solid solid none;
+	&:hover {
+	    background-color: darken($dpad-color, 5%);
+	    .inner {
+		background-color: #eaeaea;
+	    }
+	}
+	&.a {
+	    left: 100px
+	}
+	&.b {
+	    left: 0px
+	}
+	.inner {
+	    height: $dpad-w * .7;
+	    width: $dpad-w * .7;
+	    position: absolute;
+	    padding-left: 16px;
+	    line-height: 45px;
+	    top: 17px;
+	    left: 17px;
+	    border-radius: 30px;
+	    font-size: 160%;
+	    background-color: #ffffff;
+	    color: $dpad-color;
+	}
+    }
 }
