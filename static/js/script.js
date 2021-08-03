@@ -84,12 +84,10 @@ function render_pagebar(data){
 }
 
 function render_choices(data){
-  console.log('rendering', data);
   if ($.isEmptyObject(data)){
     return;
   }
   let title = $("<h2/>").addClass('prompt').text('Will you change the timeline?')
-  console.log(data);
   let choiceA = $('<div/>').addClass('col choice a')
       .append($('<div/>').addClass('init').text('A'), $('<div/>').addClass('text').text(data.A));
   let choiceB = $('<div/>').addClass('col choice b')

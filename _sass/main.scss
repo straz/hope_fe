@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap:200');
 @import url('https://fonts.googleapis.com/css?family=Spectral:200,200i,300,300i,400,400i,500,500i,600,700&display=swap');
 
+// dpad config
 $dpad-w: 70px;
 $dpad-h: 62px;
 $dpad-color: #ffd008;
 $dpad-r: $dpad-w / 2;
-$putty: #ffc107;
 
 body {
-    background-color: lighten(yellow, 40%);
-
+    background-color: #ffc;
     .outer_screen {
 	background-color: #111;
 	border-radius: 20px;
@@ -70,6 +69,8 @@ body {
 	    }
 	    
 	    .choices {
+		width: 590px;
+		height: 350px;
 		display: none;
 		.prompt { margin: 1em 0px;}
 		.choice .init {
@@ -215,18 +216,28 @@ img[alt=watch] {
     }
 }
 
+/* brushed aluminum look */
 .metal {
     /* credit: https://codepen.io/simurai/pen/DwJdq */
-  background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
-    -webkit-repeating-linear-gradient(left, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
-    -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),
-    
-    linear-gradient(180deg, hsl(0,0%,78%)  0%, 
-    hsl(0,0%,90%) 47%, 
-    hsl(0,0%,78%) 53%,
-    hsl(0,0%,70%)100%);
-  border: solid 3px transparent;
-  &:hover {
-      border: solid 3px gray;
-  }
+    background-image: -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,100%,0) 0%,
+							hsla(0,0%,100%,0)   6%,
+							hsla(0,0%,100%, .1) 7.5%),
+		      -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,  0%,0) 0%,
+							hsla(0,0%,  0%,0)   4%,
+							hsla(0,0%,  0%,.03) 4.5%),
+		      -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,100%,0) 0%,
+							hsla(0,0%,100%,0) 1.2%,
+							hsla(0,0%,100%,.15) 2.2%),
+		      linear-gradient(180deg,
+				      hsl(0,0%,78%)  0%, 
+				      hsl(0,0%,90%) 47%, 
+				      hsl(0,0%,78%) 53%,
+				      hsl(0,0%,70%)100%);
+    border: solid 3px transparent;
+    &:hover {
+	border: solid 3px gray;
+    }
 }
