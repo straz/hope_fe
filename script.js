@@ -15,6 +15,7 @@ function initialize(){
   $('#prev').click(go_prev);
   $('#next').click(go_next);
   $('.page_text').scroll(on_text_scroll);
+  $('.dpad').click(on_click_dpad);
   update_page();
 }
 
@@ -31,11 +32,20 @@ function update_crank(percent){
   $('.crank').css('transform', 'rotate(' + angle + 'deg)');
 }
 
+function on_click_dpad(evt){
+  let target = $(evt.target);
+  if (target.hasClass('east')){
+    show_choices();
+  } else if (target.hasClass('west')){
+    hide_choices();
+  }
+}
 
 function update_page(){
   $.getJSON(`${api_url}/api/current/${user}`).then(
     (data)=> {
       $('.page_text').scrollTop(0).html(marked(data.page_text));
+      hide_choices();
       render_score(data);
       render_pagebar(data);
       render_choices(data.choices);
@@ -79,26 +89,18 @@ function render_pagebar(data){
 }
 
 function render_choices(data){
+  console.log('rendering', data);
   if ($.isEmptyObject(data)){
-    $('.choices').addClass('d-none');
     return;
   }
-  let btnA = $('<input/>').attr({type:'radio', class:"btn-check",
-				 name:"options", id:"optionA"})
-  let lblA = $('<label/>').addClass('btn btn-warning btn-sm m-1')
-      .attr({for: 'optionA'}).text('A')
-
-  let btnB = $('<input/>').attr({type:'radio', class:"btn-check",
-				 name:"options", id:"optionB"})
-  let lblB = $('<label/>').addClass('btn btn-warning btn-sm m-1')
-      .attr({for: 'optionB'}).text('B')
-
-  let gA = $('<div/>').addClass('choice').append(btnA, lblA, data.A);
-  let gB = $('<div/>').addClass('choice').append(btnB, lblB, data.B);
-
-  $('.choices').removeClass('d-none').empty()
-    .append("Meddle: ", gA, gB)
-  $('.choice').click(onClickChoice);
+  let title = $("<h2/>").addClass('prompt').text('Will you change the timeline?')
+  console.log(data);
+  let choiceA = $('<div/>').addClass('col choice a')
+      .append($('<div/>').addClass('init').text('A'), $('<div/>').addClass('text').text(data.A));
+  let choiceB = $('<div/>').addClass('col choice b')
+      .append($('<div/>').addClass('init').text('B'), $('<div/>').addClass('text').text(data.B));
+  let crow = $('<div/>').addClass('row').append(choiceB, choiceA);
+  $('.choices').empty().append(title, crow);
 }
 
 function onClickChoice(evt){
@@ -118,4 +120,13 @@ function lock_scroll(pos){
 function unlock_scroll(){
   scroll_lock = false;
   console.log('unlocked');
+}
+
+function show_choices(){
+  $('.page_text').hide();
+  $('.choices').show();
+}
+function hide_choices(){
+  $('.page_text').show();
+  $('.choices').hide();
 }

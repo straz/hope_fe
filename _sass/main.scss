@@ -13,6 +13,8 @@ body {
     .outer_screen {
 	background-color: #111;
 	border-radius: 20px;
+	border: 2px solid darken($dpad-color, 9%);
+	border-style: none solid solid none;
 	width: 650px;
 	height: 450px;
 	.screen {
@@ -66,21 +68,27 @@ body {
 		font-size: 90%;
 		display: inline-block;
 	    }
-
-	}
-    }
+	    
+	    .choices {
+		display: none;
+		.prompt { margin: 1em 0px;}
+		.choice .init {
+		    width: 40px;
+		    height: 40px;
+		    padding-left: 10px;
+		    margin-bottom: .5em;
+		    line-height: 35px;
+		    font-size: 180%;
+		    border: solid 1px #eee;
+		    border-radius: 20px;
+		}
+	    }
+	} /* screen */
+    } /* outer screen */
 
     .controls {
 	margin-top: 50px;
 	margin-left: 50px;
-    }
-    .choices {
-	.choice:hover {
-	    background-color: #ee9;
-	}
-	.choice.active label {
-	    background-color: darken(#ffc107, 7%);
-	}
     }
 }
 
