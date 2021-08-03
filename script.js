@@ -12,8 +12,8 @@ var scroll_wait = 1000;
 
 function initialize(){
   marked.setOptions({'smartypants':true});
-  $('#prev').click(go_prev);
-  $('#next').click(go_next);
+  $('.crank .up').click(go_prev);
+  $('.crank .down').click(go_next);
   $('.page_text').scroll(on_text_scroll);
   $('.dpad').click(on_click_dpad);
   update_page();
@@ -27,10 +27,6 @@ function go_prev(evt){
   $.get(`${api_url}/api/prev/${user}`).then(update_page);
 }
 
-function update_crank(percent){
-  let angle = percent * 360 / 100;
-  $('.crank').css('transform', 'rotate(' + angle + 'deg)');
-}
 
 function on_click_dpad(evt){
   let target = $(evt.target);
@@ -82,7 +78,6 @@ function render_pagebar(data){
   let count = data.page_count; // N pages
   let index = data.page_index; // start=0
   let percent = 100.0*(index)/(count-1)
-  update_crank(percent);
   $('.progress-bar').css('width', percent+'%');
   $('#page_count').html(count);
   $('#page_index').html(index+1);

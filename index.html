@@ -4,9 +4,8 @@
 {% include head.html %}
 
 <body>
-  <div class="container">
-  <div class="row">
-    <div class="col-10 outer_screen mt-3 p-4">
+  <div class="d-flex flex-row align-items-start p-4">
+    <div class="outer_screen p-4">
       <div class="screen p-2">
 	<div class="bumper top"></div>
 	<div class="page_text overflow-auto" class="my-4 pt-2 pb-5 px-1">
@@ -26,16 +25,11 @@
       </div>
     </div>
     
-    <div class="col-2 mt-5">
-      <img class="crank" src="pix/crank.png"/>
-      <div>crank:</div>
-      <button id="next" class="btn btn-sm btn-primary my-3" href="/api/next">
-	Fwd <i class="fa fa-caret-right"></i></button>
-      <br/>
-      <button id="prev" class="btn btn-sm btn-primary" href="/api/prev">
-	<i class="fa fa-caret-left"></i> Back</button>
+    <div class="crank ms-3">
+      <span>crank</span>
+	<div class="metal tab up"><i class="fal fa-arrow-alt-up"></i></div>
+	<div class="metal tab down"><i class="fal fa-arrow-alt-down"></i></div>
     </div>
-  </div>
   </div>
   
   <div class="container mt-3">
