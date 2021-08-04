@@ -7,8 +7,11 @@ const user = 'steve';
 
 const api_url = "{{ site.api_url }}";
 
+const scroll_amount = '200px';
 var scroll_lock = false;
 var scroll_wait = 1000;
+var has_choices = false;
+var active_choice = null;
 
 function initialize(){
   marked.setOptions({'smartypants':true});
@@ -16,24 +19,68 @@ function initialize(){
   $('.crank .down').click(go_next);
   $('.page_text').scroll(on_text_scroll);
   $('.dpad').click(on_click_dpad);
+  $('.abgroup .outer.ab').click(on_click_ab);
+  $(document).keypress(on_keypress);
   update_page();
+
 }
 
+// handle 'A' or 'B' key/click event
+function on_click_ab(evt){
+  if ($(evt).hasClass('ab')){
+    target = $(evt);
+  } else {
+    target = $(evt.target).closest('.outer');
+  }
+  if (target.hasClass('a')){
+    active_choice = 'A'
+    console.log('a');
+  } else if (target.hasClass('b')) {
+    active_choice = 'B'
+    console.log('b');
+  }
+  update_checks(true);
+}
+
+// keyboard typed 'A' or 'B', forward to on_click_ab()
+function on_keypress(evt){
+  let chr = String.fromCharCode(evt.charCode).toUpperCase();
+  if (chr == 'A'){
+    on_click_ab($('.abgroup .a'));
+  } else if (chr == 'B'){
+    on_click_ab($('.abgroup .b'));
+  }
+}
+
+
+
 function go_next(evt){
-  $.get(`${api_url}/api/next/${user}`).then(update_page);
+  if (is_page_bottom()){
+    $.get(`${api_url}/api/next/${user}`).then(update_page);
+  } else {
+    $('.page_text').animate({scrollTop: '+=' + scroll_amount}, 800);
+  }
 }
 
 function go_prev(evt){
-  $.get(`${api_url}/api/prev/${user}`).then(update_page);
+  if (is_page_top()){
+    $.get(`${api_url}/api/prev/${user}`).then(update_page);
+  } else {
+    $('.page_text').animate({scrollTop: '-=' + scroll_amount}, 800);
+  }
 }
 
 
 function on_click_dpad(evt){
   let target = $(evt.target);
-  if (target.hasClass('east')){
+  if (has_choices && target.hasClass('east')){
     show_choices();
   } else if (target.hasClass('west')){
     hide_choices();
+  } else if (target.hasClass('north')){
+    go_prev();
+  } else if (target.hasClass('south')){
+    go_next();
   }
 }
 
@@ -47,6 +94,18 @@ function update_page(){
       render_choices(data.choices);
     }
   );
+}
+
+function is_page_top(){
+  let div = $('.page_text');
+  let pos = $(div).scrollTop();
+  return pos == 0;
+}
+
+function is_page_bottom(){
+  let div = $('.page_text');
+  let pos = $(div).scrollTop();
+  return pos == ($(div)[0].scrollHeight - $(div).height());
 }
 
 
@@ -85,21 +144,53 @@ function render_pagebar(data){
 
 function render_choices(data){
   if ($.isEmptyObject(data)){
+    has_choices = false;
+    $('.go_ab').hide();
     return;
   }
-  let title = $("<h2/>").addClass('prompt').text('Will you change the timeline?')
-  let choiceA = $('<div/>').addClass('col choice a')
-      .append($('<div/>').addClass('init').text('A'), $('<div/>').addClass('text').text(data.A));
-  let choiceB = $('<div/>').addClass('col choice b')
-      .append($('<div/>').addClass('init').text('B'), $('<div/>').addClass('text').text(data.B));
+  has_choices = true;
+  $('.go_ab').show();
+  let goback = $('.goback');
+  let title = $("<h2/>").addClass('prompt').text('Will you change the timeline?');
+
+  let initA = $('<div/>').addClass('init').text('A');
+  let checkA = $('<div/>').addClass('check ms-3').html($('<i/>').addClass(['far', 'fa-check']));
+  let textA = $('<div/>').addClass('text').text(data.A);
+  let titleA = $('<div/>').addClass('d-flex flex-row').append(initA, checkA);
+  let choiceA = $('<div/>').addClass('col choice a').append(titleA, textA);
+
+  let initB = $('<div/>').addClass('init').text('B');
+  let checkB = $('<div/>').addClass('check ms-3').html($('<i/>').addClass(['far', 'fa-check']));
+  let textB = $('<div/>').addClass('text').text(data.B);
+  let titleB = $('<div/>').addClass('d-flex flex-row').append(initB, checkB);
+  let choiceB = $('<div/>').addClass('col choice b').append(titleB, textB);
+
   let crow = $('<div/>').addClass('row').append(choiceB, choiceA);
-  $('.choices').empty().append(title, crow);
+  $('.choices').empty().append(title, crow, goback);
+  active_choice = 'A';
+  update_checks()
 }
 
-function onClickChoice(evt){
-  console.log(evt.currentTarget);
-  $('.choice.active').removeClass('active');
-  $(evt.currentTarget).addClass('active');
+// if animate=true, fade in/out the choices
+function update_checks(animate){
+  if (animate == true){
+    $('.choices').fadeOut(()=>{
+      redraw_checks()
+      $('.choices').fadeIn();
+    })
+  } else {
+    redraw_checks()
+  }
+}
+
+function redraw_checks(){
+  if (active_choice == 'A') {
+    $('.choice.a .check').show();
+    $('.choice.b .check').hide();
+  } else if (active_choice == 'B') {
+    $('.choice.b .check').show();
+    $('.choice.a .check').hide();
+  }
 }
 
 // pos is 'top' or 'bottom'
@@ -117,9 +208,13 @@ function unlock_scroll(){
 
 function show_choices(){
   $('.page_text').hide();
+  $('.go_ab').hide();
   $('.choices').show();
 }
 function hide_choices(){
   $('.page_text').show();
+  if (has_choices){
+    $('.go_ab').show();
+  }
   $('.choices').hide();
 }

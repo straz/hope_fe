@@ -1,3 +1,277 @@
 ---
 ---
-@import "main";
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap:200');
+@import url('https://fonts.googleapis.com/css?family=Spectral:200,200i,300,300i,400,400i,500,500i,600,700&display=swap');
+
+// dpad config
+$dpad-w: 70px;
+$dpad-h: 62px;
+$dpad-color: #ffd008;
+$dpad-r: $dpad-w / 2;
+
+body {
+    background-color: #ffc;
+    .outer_screen {
+	background-color: #111;
+	border-radius: 20px;
+	border: 2px solid darken($dpad-color, 9%);
+	border-style: none solid solid none;
+	width: 650px;
+	height: 450px;
+	.screen {
+	    position: relative;
+	    .bumper { background-color: #8886;
+		      z-index: 10;
+		      position: absolute;
+		      display: none;
+		      left: 0px;
+		      width: 600px;
+		      height: 20px;
+		      &.top {
+			  top: 0px;
+			  background-color: #8883;
+		      }
+		      &.bottom {
+			  bottom: 42px;
+			  background-color: #8883;
+		      }
+		    }
+	    background-color: #333;
+	    color: #DDD;
+	    width: 600px;
+	    height: 400px;
+	    .page_text {
+		width: 590px;
+		height: 350px;
+		font-family: Spectral, TimesNewRoman;
+		font-size: 120%;
+		border-bottom: solid .5px #444;
+		margin-bottom: 4px;
+		h1, h3 {
+		    font-family: Lato, sans-serif;
+		    font-weight: 200;
+		    margin-bottom: 1em;
+		}
+	    }
+	    .pbar {
+		font-size: 14px;
+		position: absolute;
+		bottom: 14px;
+		.progress {
+		    height: 3px;
+		    width: 220px;
+		    .progress-bar {
+			background-color: #996;
+		    }
+		}
+	    }
+	    .score {
+		position: absolute;
+		right: 5em;
+		bottom: 10px;
+		font-size: 14px;
+	    }
+	    .go_ab {
+		position: absolute;
+		display: none;
+		font-size: 24px;
+		color: #999;
+		right: 1em;
+		bottom: 4px;
+	    }
+	    .choices {
+		position: absolute;
+		width: 590px;
+		height: 350px;
+		display: none;
+		.prompt { margin
+			  : 1em 0px;}
+		.choice .check {
+		    font-size: 200%;
+		    color: #999;
+		    display: none;
+		}
+		.choice .init {
+		    width: 40px;
+		    height: 40px;
+		    padding-left: 10px;
+		    margin-bottom: .5em;
+		    line-height: 35px;
+		    font-size: 180%;
+		    border: solid 1px #eee;
+		    border-radius: 20px;
+		}
+		.goback {
+		    font-size: 24px;
+		    color: #999;
+		    position: absolute;
+		    bottom: .8em;
+		    left: 0em;
+		}
+	    }
+	} /* screen */
+    } /* outer screen */
+
+    .controls {
+	margin-top: 50px;
+	margin-left: 50px;
+    }
+}
+
+
+img[alt=watch] {
+    width: 400px
+}
+
+.dpad {
+    position: relative;
+    .leg {
+	position: absolute;
+	background-color: $dpad-color;
+	border: 4px solid darken($dpad-color, 4%);
+
+	&:hover {
+	    background-color: darken($dpad-color, 4%);
+	}
+	&.north {
+	    top: 0px; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-w;
+	    border-radius: $dpad-r $dpad-r 0 0;
+	    border-style: none solid none none;
+	}
+	&.east {
+	    top: $dpad-w; left: $dpad-w + $dpad-h;
+	    width: $dpad-w; height: $dpad-h;
+	    border-radius: 0px $dpad-r $dpad-r 0px;
+	    border-style: none solid solid none;
+	}
+	&.west {
+	    top: $dpad-w; left: 0px;
+	    width: $dpad-w; height: $dpad-h;
+	    border-radius: $dpad-r 0px 0px $dpad-r;
+	    border-style: none none solid none;
+	}
+	&.south {
+	    top: $dpad-w + $dpad-h; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-w;
+	    border-radius: 0px 0px $dpad-r $dpad-r;
+	    border-style: none solid solid none;
+	}
+	&.center {
+	    top: $dpad-w; left: $dpad-w;
+	    width: $dpad-h; height: $dpad-h;
+	    border-style: none;
+	    &:hover {
+		background-color: $dpad-color;
+	    }
+	}
+    }
+}
+
+.abgroup {
+    position: relative;
+    left: 340px;
+    top: 30px;
+    .ab {
+	position: absolute;
+	height: $dpad-w * 1.2;
+	width: $dpad-w * 1.2;
+	border-radius: ($dpad-w * 1.2) / 2;
+	background-color: $dpad-color;
+	top: 0px;
+	padding: 10px 0px 0px 20px;
+	border: 4px solid darken($dpad-color, 4%);
+	border-style: none solid solid none;
+	&:hover {
+	    background-color: darken($dpad-color, 5%);
+	    .inner {
+		background-color: #eaeaea;
+	    }
+	}
+	&.a {
+	    left: 100px
+	}
+	&.b {
+	    left: 0px
+	}
+	.inner {
+	    height: $dpad-w * .7;
+	    width: $dpad-w * .7;
+	    position: absolute;
+	    padding-left: 16px;
+	    line-height: 45px;
+	    top: 17px;
+	    left: 17px;
+	    border-radius: 30px;
+	    font-size: 160%;
+	    background-color: #ffffff;
+	    color: $dpad-color;
+	}
+    }
+}
+
+.crank {
+    top: 12em;
+    left: 1em;
+    position: relative;
+    .washer {
+	margin-top: 8em;
+	width: 5px;
+	height: 45px;
+    }
+    .handle {
+	width: 45px;
+	height: 200px;
+	border-radius: 7px 7px $dpad-r $dpad-r;
+    }
+    .tabs {
+	margin-top: -63px;
+	.tab {
+	    background-color: $dpad-color;
+	    position: relative;
+	    width: 50px;
+	    height: 70px;
+	    font-size: 4em;
+	    border-radius: 3px;
+	    border: 4px solid darken($dpad-color, 4%);
+	    border-style: none solid solid none;
+
+	    &:hover {
+		border: solid 3px gray;
+	    }
+	    i {
+		position: absolute;
+		top: 20px;
+		left: 8px;
+		font-size: 50%;
+		color: #FFF9;
+	    }
+	}
+    }
+}
+
+/* brushed aluminum look */
+.metal {
+    /* credit: https://codepen.io/simurai/pen/DwJdq */
+    background-image: -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,100%,0) 0%,
+							hsla(0,0%,100%,0)   6%,
+							hsla(0,0%,100%, .1) 7.5%),
+		      -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,  0%,0) 0%,
+							hsla(0,0%,  0%,0)   4%,
+							hsla(0,0%,  0%,.03) 4.5%),
+		      -webkit-repeating-linear-gradient(left,
+							hsla(0,0%,100%,0) 0%,
+							hsla(0,0%,100%,0) 1.2%,
+							hsla(0,0%,100%,.15) 2.2%),
+		      linear-gradient(180deg,
+				      hsl(0,0%,78%)  0%, 
+				      hsl(0,0%,90%) 47%, 
+				      hsl(0,0%,78%) 53%,
+				      hsl(0,0%,70%)100%);
+}
+
+.tooltip-inner {
+    background-color: #0006;
+}
