@@ -32,6 +32,11 @@ function on_click_ab(evt){
   } else {
     target = $(evt.target).closest('.outer');
   }
+  if ($('.choices').css('display') == 'none') {
+    // only change checkmark if .choices are visible
+    return;
+  }
+  // Change checkmark
   if (target.hasClass('a')){
     active_choice = 'A'
     console.log('a');
@@ -173,7 +178,7 @@ function render_choices(data){
 
 // if animate=true, fade in/out the choices
 function update_checks(animate){
-  if (animate == true){
+  if (animate == true && $('.choices').css('display') != 'none'){
     $('.choices').fadeOut(()=>{
       redraw_checks()
       $('.choices').fadeIn();
