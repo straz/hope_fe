@@ -218,3 +218,16 @@ function hide_choices(){
   }
   $('.choices').hide();
 }
+
+function locator(node){
+  var rect = node.getBoundingClientRect();
+  let loc = $('<div/>').addClass('loc').css({ position: 'absolute',
+					      left: rect.x + window.scrollX,
+					      top: rect.y + window.scrollY,
+					      width: rect.width,
+					      height: rect.height,
+					      'background-color': '#f805',
+					    });
+  $('body').append(loc);
+  return loc;
+}
