@@ -12,6 +12,7 @@
 	<div class="page_text overflow-auto" class="my-4 pt-2 pb-5 px-1">
 	  {{ page_text }}
 	</div>
+	{% include intro.html %}
 	<div class="choices " class="">
 	  <div class="goback"><i class="fal fa-arrow-alt-left me-3"></i>back to timeline</div>
 	</div>
@@ -53,6 +54,23 @@
       </div>
 
     </div>
+  </div>
+  <div class="gear_panel p-2 d-flex flex-row-reverse closed">
+    <div class="gear_toggle"><i class="fa fa-cog"></i></div>
+    <div class="set_color yellow"></div>
+    <div class="set_color pale_yellow"></div>
+    <div class="set_color pink"></div>
+    <select class="form-select form-select-sm me-3">
+      <option selected>In A New York Minute</option>
+      <option disabled>Fruit Ninja: Flawless Ripeness</option>
+      <option disabled>You Were At My Wedding, Denise</option>
+      <option disabled>I Remember Marcel Proust</option>
+      <option disabled>The Day The Earth Stood Up</option>
+      <option disabled>Double Jeopardy On Trial</option>
+      <option disabled>Not Those Goddamn Nazis, Again</option>
+      <option disabled>──────────</option>
+      <option disabled>Load title…</option>
+      </select>
   </div>
 </div>    
 </body>

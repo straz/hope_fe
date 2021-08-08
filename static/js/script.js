@@ -20,10 +20,33 @@ function initialize(){
   $('.page_text').scroll(on_text_scroll);
   $('.dpad').click(on_click_dpad);
   $('.abgroup .outer.ab').click(on_click_ab);
+  $('.gear_panel .gear_toggle').click(on_click_gear);
+  $('.gear_panel .set_color').click(on_click_setcolor);
   $(document).keypress(on_keypress);
   update_page();
 
 }
+
+// screen mode: returns oneof 'intro', 'choices', 'timeline'
+function now_showing(){
+  if ($('.intro').css('display') != 'none') {
+    return 'intro';
+  } else if ($('.choices').css('display') != 'none') {
+    return 'choices';
+  }
+  return 'timeline';
+}
+
+function show_intro(){
+  $('.page_text, .statusbar').hide();
+  $('.intro').show();
+}
+  
+function hide_intro(){
+  $('.page_text, .statusbar').show();
+  $('.intro').hide();
+}
+  
 
 // handle 'A' or 'B' key/click event
 function on_click_ab(evt){
@@ -32,17 +55,18 @@ function on_click_ab(evt){
   } else {
     target = $(evt.target).closest('.outer');
   }
-  if ($('.choices').css('display') == 'none') {
+  if (now_showing() == 'intro') {
+    return;
+  }
+  if (now_showing() != 'choices') {
     // only change checkmark if .choices are visible
     return;
   }
   // Change checkmark
   if (target.hasClass('a')){
     active_choice = 'A'
-    console.log('a');
   } else if (target.hasClass('b')) {
     active_choice = 'B'
-    console.log('b');
   }
   update_checks(true);
 }
@@ -77,14 +101,29 @@ function go_prev(evt){
 
 
 function on_click_dpad(evt){
+  if (now_showing() == 'intro'){
+    hide_intro();
+    update_page();
+    return;
+  }
   let target = $(evt.target);
-  if (has_choices && target.hasClass('east')){
-    show_choices();
+  if (target.hasClass('east')){
+    if (now_showing() == 'timeline' && has_choices) {
+      show_choices();
+      return;
+    }
   } else if (target.hasClass('west')){
-    hide_choices();
-  } else if (target.hasClass('north')){
+    if (now_showing() == 'choices'){
+      hide_intro();
+      hide_choices();
+      return;
+    }
+    if (now_showing() == 'timeline'){
+      show_intro();
+    }
+  } else if (target.hasClass('north') && now_showing() == 'timeline'){
     go_prev();
-  } else if (target.hasClass('south')){
+  } else if (target.hasClass('south') && now_showing() == 'timeline'){
     go_next();
   }
 }
@@ -118,17 +157,13 @@ function on_text_scroll(evt){
   let div = evt.target;
   let pos = $(div).scrollTop();
   if ( pos == 0){
-    // console.log('top!');
     if (!scroll_lock){
       lock_scroll('top');
-      // go_prev();
     }
   }
   if ( pos == $(div)[0].scrollHeight - $(div).height()) {
-    // console.log('bottom!');
     if (!scroll_lock){
       lock_scroll('bottom');
-      // go_next();
     }
   }
 }
@@ -203,12 +238,10 @@ function lock_scroll(pos){
   if (scroll_lock){ return; }
   $( ".bumper."+pos ).css( "display", "block" ).fadeOut("slow", unlock_scroll);
   scroll_lock = true;
-  console.log('locked');
 }
 
 function unlock_scroll(){
   scroll_lock = false;
-  console.log('unlocked');
 }
 
 function show_choices(){
@@ -235,4 +268,14 @@ function locator(node){
 					    });
   $('body').append(loc);
   return loc;
+}
+
+function on_click_gear(){
+  $('.gear_panel').toggleClass('closed');
+}
+
+function on_click_setcolor(evt){
+  let target = $(evt.target);
+  let color = target.css('background-color');
+  $('.case').css('background-color', color);
 }
