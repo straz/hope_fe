@@ -5,7 +5,7 @@ $(document).ready(initialize);
 
 const user = 'steve';
 
-const api_url = "{{ site.api_url }}";
+const API_URL = "{{ site.api_url }}";
 
 const scroll_amount = '200px';
 var scroll_lock = false;
