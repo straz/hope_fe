@@ -14,6 +14,12 @@ var has_choices = false;
 var active_choice = null;
 
 function initialize(){
+  load_config();
+  READY = setup_world();
+  if (CONFIG != null && 'setColor' in CONFIG) {
+    $('.case').css('background-color', CONFIG.setColor);
+  }
+  $('.case').css('display', 'block');
   marked.setOptions({'smartypants':true});
   $('.crank .up').click(go_prev);
   $('.crank .down').click(go_next);
@@ -24,7 +30,6 @@ function initialize(){
   $('.gear_panel .set_color').click(on_click_setcolor);
   $(document).keypress(on_keypress);
   update_page();
-
 }
 
 // screen mode: returns oneof 'intro', 'choices', 'timeline'
@@ -81,24 +86,29 @@ function on_keypress(evt){
   }
 }
 
-
-
 function go_next(evt){
   if (is_page_bottom()){
-    $.get(`${api_url}/api/next/${user}`).then(update_page);
+    READY.then(
+      ()=> {
+	TIMELINE.go_next();
+	update_page();
+      })
   } else {
     $('.page_text').animate({scrollTop: '+=' + scroll_amount}, 800);
   }
 }
 
-function go_prev(evt){
+function go_prev(){
   if (is_page_top()){
-    $.get(`${api_url}/api/prev/${user}`).then(update_page);
+    READY.then(
+      ()=> {
+	TIMELINE.go_prev();
+	update_page();
+      })
   } else {
     $('.page_text').animate({scrollTop: '-=' + scroll_amount}, 800);
   }
 }
-
 
 function on_click_dpad(evt){
   if (now_showing() == 'intro'){
@@ -129,13 +139,15 @@ function on_click_dpad(evt){
 }
 
 function update_page(){
-  $.getJSON(`${api_url}/api/current/${user}`).then(
-    (data)=> {
-      $('.page_text').scrollTop(0).html(marked(data.page_text));
+  READY.then(
+    ()=>
+    {
+      let page = TIMELINE.current_page();
+      $('.page_text').scrollTop(0).html(marked(page.text));
       hide_choices();
-      render_score(data);
-      render_pagebar(data);
-      render_choices(data.choices);
+      render_score(TIMELINE.score_all());
+      render_pagebar(TIMELINE.page_loc());
+      render_choices(page.choices);
     }
   );
 }
@@ -278,4 +290,6 @@ function on_click_setcolor(evt){
   let target = $(evt.target);
   let color = target.css('background-color');
   $('.case').css('background-color', color);
+  CONFIG.setColor = color;
+  save_config();
 }
