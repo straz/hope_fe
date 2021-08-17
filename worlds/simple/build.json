@@ -28,8 +28,8 @@
       "text": "### chapter 1\n\nThe hotel was in good shape, not fancy but not shabby either.\nIt was early in the afternoon, and Carl needed to get up to\nroom {{ room }} to meet his next client. He was feeling a bit tired,\nthere were too many things on his mind, and he just wanted to\nget this over with.\n\nThere was a crowd of kids, probably some kind of high school\nvolleyball team, standing in front of the elevator.  They had just\narrived with their luggage. The kids laughed and elbowed each other\nabout some joke they shared.\n\nIt might be easier, Carl thought to himself, to avoid the elevator for\nnow.  Scanning the lobby, he saw what looked like a sign pointing to\nthe stairs opposite the front desk, behind a large philodendron. It\nwas only two flights up.\n\n{{ place }}\n\nHe made it to the room in no time at all, and let himself in with the\nkey in his shirt pocket.",
       "meta": {
         "choice": "A",
-        "fill.room.js": "Math.floor(Math.random() * 6) + 301",
-        "fill.place.js": "{if (this.choice == 'A') {\n return this.context['place.A']; \n } else {\n return this.context['place.B'];\n }}",
+        "start.room.js": "Math.floor(Math.random() * 6) + 301",
+        "chosen.place.js": "{if (this.choice == 'A') {\n return this.context['place.A']; \n } else {\n return this.context['place.B'];\n }}",
         "place.A": "Nah, better to catch a ride. He waited patiently for the elevator to\nfill up with kids, and let them go onward and upward. He basked in the\nsilence, refreshing him like a breeze of fresh air. After a few\nminutes, the doors dinged open and he stepped in.",
         "place.B": "The carpeting on the stairs seemed to be freshly shampooed\nand smelled faintly sweet, like bubble gum. The short polyester's\nbroad yellow and orange plaid pattern said to him \"I've been here\nsince before you were born, and I'll be here long after you're gone.\""
       },
