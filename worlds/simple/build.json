@@ -29,7 +29,7 @@
       "meta": {
         "choice": "A",
         "start.room.js": "Math.floor(Math.random() * 6) + 301",
-        "chosen.place.js": "{console.log('js', this.context.choice, this.context);\n if (this.choice == 'A') {\n return this.context['place.A']; \n } else {\n return this.context['place.B'];\n }}",
+        "chosen.place.js": "{console.log('js', this.context.choice, this.context);\n if (this.context.choice == 'A') {\n return this.context['place.A']; \n } else {\n return this.context['place.B'];\n }}",
         "place.A": "Nah, better to catch a ride. He waited patiently for the elevator to\nfill up with kids, and let them go onward and upward. He basked in the\nsilence, refreshing him like a breeze of fresh air. After a few\nminutes, the doors dinged open and he stepped in.",
         "place.B": "The carpeting on the stairs seemed to be freshly shampooed\nand smelled faintly sweet, like bubble gum. The short polyester's\nbroad yellow and orange plaid pattern said to him \"I've been here\nsince before you were born, and I'll be here long after you're gone.\""
       },
