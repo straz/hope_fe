@@ -17,10 +17,6 @@ function initialize(){
   restore_saved_color();
 
   // restore game state
-  // wait for marked.js to load
-  //var markedjs = document.querySelector('#markedjs');
-  //script.addEventListener('load',
-  console.log('marked:', typeof marked)
   READY = World.setup();
   READY.then((world)=> {
     WORLD=world;
