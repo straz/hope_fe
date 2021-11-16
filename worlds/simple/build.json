@@ -50,7 +50,7 @@
       }
     },
     "4": {
-      "text": "### Chapter 4\nI don't see how any of this affects me, honestly.",
+      "text": "### Chapter 4\nAt first, the furniture seemed perfectly ordinary. A bed, a\nnightstand, a desk, and a small TV on the dresser. Nothing\nthat would cause anyone any alarm.",
       "next_id": "5",
       "choices": {
         "prompt": "Feeling thirsty?",
@@ -59,7 +59,7 @@
       }
     },
     "5": {
-      "text": "### Chapter 5\nA text from the lab: _something is not right_\"",
+      "text": "### Chapter 5\nA text from the lab: _something is not right_",
       "next_id": "6"
     },
     "6": {
